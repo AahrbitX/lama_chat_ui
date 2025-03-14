@@ -15,13 +15,15 @@ import {
   useColorMode,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { SearchBar } from '@/components/navbar/searchBar/SearchBar';
+// import { SearchBar } from '@/components/navbar/searchBar/SearchBar';
 import { SidebarResponsive } from '@/components/sidebar/Sidebar';
 import { IoMdMoon, IoMdSunny } from 'react-icons/io';
 import { MdInfoOutline } from 'react-icons/md';
 import APIModal from '@/components/apiModal';
 import NavLink from '../link/NavLink';
 import routes from '@/routes';
+import { NextAvatar } from '../image/Avatar';
+import avatar1 from '/public/img/avatars/avatar1.jpg';
 
 export default function HeaderLinks(props: {
   secondary: boolean;
@@ -36,31 +38,33 @@ export default function HeaderLinks(props: {
   const borderColor = useColorModeValue('#E6ECFA', 'rgba(135, 140, 189, 0.3)');
   const shadow = useColorModeValue(
     '14px 17px 40px 4px rgba(112, 144, 176, 0.18)',
-    '0px 41px 75px #081132',
+    '0px 41px 75px #081132'
   );
   const buttonBg = useColorModeValue('transparent', 'navy.800');
   const hoverButton = useColorModeValue(
     { bg: 'gray.100' },
-    { bg: 'whiteAlpha.100' },
+    { bg: 'whiteAlpha.100' }
   );
   const activeButton = useColorModeValue(
     { bg: 'gray.200' },
-    { bg: 'whiteAlpha.200' },
+    { bg: 'whiteAlpha.200' }
   );
 
   return (
     <Flex
       zIndex="100"
-      w={{ sm: '100%', md: 'auto' }}
+      w="fit"
       alignItems="center"
       flexDirection="row"
       bg={menuBg}
       flexWrap={secondary ? { base: 'wrap', md: 'nowrap' } : 'unset'}
-      p="10px"
+      py="10px"
+      px="14px"
+      gap={2}
       borderRadius="30px"
-      boxShadow={shadow}
+      boxShadow={'md'}
     >
-      <SearchBar
+      {/* <SearchBar
         mb={() => {
           if (secondary) {
             return { base: '10px', md: 'unset' };
@@ -69,11 +73,12 @@ export default function HeaderLinks(props: {
         }}
         me="10px"
         borderRadius="30px"
-      />
-      <SidebarResponsive routes={routes} />
-      <APIModal setApiKey={setApiKey} />
+      /> */}
 
-      <Menu>
+      <SidebarResponsive routes={routes} />
+      {/* <APIModal setApiKey={setApiKey} /> */}
+
+      {/* <Menu>
         <MenuButton p="0px">
           <Icon
             mt="6px"
@@ -95,7 +100,7 @@ export default function HeaderLinks(props: {
           minW={{ base: 'unset' }}
           maxW={{ base: '360px', md: 'unset' }}
         >
-          {/* <Flex bgImage={navImage} borderRadius="16px" mb="28px" alt="" /> */}
+          // <Flex bgImage={navImage} borderRadius="16px" mb="28px" alt="" /> 
           <Flex flexDirection="column">
             <Link
               isExternal
@@ -158,7 +163,7 @@ export default function HeaderLinks(props: {
             </Link>
           </Flex>
         </MenuList>
-      </Menu>
+      </Menu> */}
 
       <Button
         variant="no-hover"
@@ -180,19 +185,7 @@ export default function HeaderLinks(props: {
       </Button>
       <Menu>
         <MenuButton p="0px" style={{ position: 'relative' }}>
-          <Box
-            _hover={{ cursor: 'pointer' }}
-            color="white"
-            bg="#11047A"
-            w="40px"
-            h="40px"
-            borderRadius={'50%'}
-          />
-          <Center top={0} left={0} position={'absolute'} w={'100%'} h={'100%'}>
-            <Text fontSize={'xs'} fontWeight="bold" color={'white'}>
-              AP
-            </Text>
-          </Center>
+          <NextAvatar h="34px" w="34px" src={avatar1} me="10px" />
         </MenuButton>
         <MenuList
           boxShadow={shadow}
@@ -214,7 +207,7 @@ export default function HeaderLinks(props: {
               fontWeight="700"
               color={textColor}
             >
-              👋&nbsp; Hey, Adela
+              👋&nbsp; Hey, Abin
             </Text>
           </Flex>
           <Flex flexDirection="column" p="10px">
@@ -231,17 +224,6 @@ export default function HeaderLinks(props: {
                 </Text>
               </MenuItem>
             </NavLink>
-            <MenuItem
-              _hover={{ bg: 'none' }}
-              _focus={{ bg: 'none' }}
-              color={textColor}
-              borderRadius="8px"
-              px="14px"
-            >
-              <Text fontWeight="500" fontSize="sm">
-                Newsletter Settings
-              </Text>
-            </MenuItem>
             <MenuItem
               _hover={{ bg: 'none' }}
               _focus={{ bg: 'none' }}

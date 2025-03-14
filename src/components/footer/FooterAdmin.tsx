@@ -23,6 +23,7 @@ export default function Footer() {
       justifyContent="space-between"
       px={{ base: '30px', md: '50px' }}
       pb="30px"
+      mt="50px"
     >
       <Text
         color={textColor}
@@ -37,7 +38,7 @@ export default function Footer() {
         {' '}
         &copy; {new Date().getFullYear()}
         <Text as="span" fontWeight="500" ms="4px">
-          Horizon UI AI Template. All Rights Reserved.
+          AahrbitX Lama Bot. All Rights Reserved.
         </Text>
       </Text>
       <List display="flex">
@@ -51,7 +52,7 @@ export default function Footer() {
             fontWeight="500"
             fontSize={{ base: 'xs', md: 'sm' }}
             color={textColor}
-            href="https://horizon-ui.com/pro"
+            href="https://aahbitx.in"
           >
             Homepage
           </Link>
@@ -66,7 +67,7 @@ export default function Footer() {
             fontWeight="500"
             fontSize={{ base: 'xs', md: 'sm' }}
             color={textColor}
-            href="https://horizon-ui.notion.site/End-User-License-Agreement-8fb09441ea8c4c08b60c37996195a6d5"
+            href="#"
           >
             License
           </Link>
@@ -81,7 +82,7 @@ export default function Footer() {
             fontWeight="500"
             fontSize={{ base: 'xs', md: 'sm' }}
             color={textColor}
-            href="https://horizon-ui.notion.site/Terms-Conditions-6e79229d25ed48f48a481962bc6de3ee"
+            href="#"
           >
             Terms of Use
           </Link>
@@ -91,7 +92,7 @@ export default function Footer() {
             fontWeight="500"
             fontSize={{ base: 'xs', md: 'sm' }}
             color={textColor}
-            href="https://horizon-ui.notion.site/Privacy-Policy-8addde50aa8e408ca5c5f5811c38f971"
+            href="#"
           >
             Privacy Policy
           </Link>

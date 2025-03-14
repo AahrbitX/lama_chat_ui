@@ -16,7 +16,7 @@ import {
 } from '@chakra-ui/react';
 import NavLink from '@/components/link/NavLink';
 //   Custom components
-import avatar4 from '/public/img/avatars/avatar4.png';
+import avatar1 from '/public/img/avatars/avatar1.jpg';
 import { NextAvatar } from '@/components/image/Avatar';
 import APIModal from '@/components/apiModal';
 import Brand from '@/components/sidebar/components/Brand';
@@ -44,13 +44,10 @@ function SidebarContent(props: SidebarContent) {
   const bgColor = useColorModeValue('white', 'navy.700');
   const shadow = useColorModeValue(
     '14px 17px 40px 4px rgba(112, 144, 176, 0.18)',
-    '14px 17px 40px 4px rgba(12, 44, 55, 0.18)',
+    '14px 17px 40px 4px rgba(12, 44, 55, 0.18)'
   );
   const iconColor = useColorModeValue('navy.700', 'white');
-  const shadowPillBar = useColorModeValue(
-    '4px 17px 40px 4px rgba(112, 144, 176, 0.08)',
-    'none',
-  );
+
   const gray = useColorModeValue('gray.500', 'white');
   // SIDEBAR
   return (
@@ -70,21 +67,27 @@ function SidebarContent(props: SidebarContent) {
         </Box>
       </Stack>
 
-      <Box mt="60px" width={'100%'} display={'flex'} justifyContent={'center'}>
+      {/* <Box mt="60px" width={'100%'} display={'flex'} justifyContent={'center'}>
         <SidebarCard />
-      </Box>
-      <APIModal setApiKey={setApiKey} sidebar={true} />
+      </Box> */}
+      {/* <APIModal setApiKey={setApiKey} sidebar={true} /> */}
       <Flex
         mt="8px"
         justifyContent="center"
         alignItems="center"
-        boxShadow={shadowPillBar}
+        shadow={'inner'}
         borderRadius="30px"
         p="14px"
       >
-        <NextAvatar h="34px" w="34px" src={avatar4} me="10px" />
-        <Text color={textColor} fontSize="xs" fontWeight="600" me="10px">
-          Adela Parkson
+        <NextAvatar h="34px" w="34px" src={avatar1} me="10px" />
+        <Text
+          style={{ flexGrow: 1 }}
+          color={textColor}
+          fontSize="xs"
+          fontWeight="600"
+          me="10px"
+        >
+          Abin
         </Text>
         <Menu>
           <MenuButton

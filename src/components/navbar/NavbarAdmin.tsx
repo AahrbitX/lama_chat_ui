@@ -17,20 +17,9 @@ import { isWindowAvailable } from '@/utils/navigation';
 export default function AdminNavbar(props: {
   secondary: boolean;
   brandText: string;
-  logoText: string;
   onOpen: (...args: any[]) => any;
   setApiKey: any;
 }) {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    isWindowAvailable() && window.addEventListener('scroll', changeNavbar);
-
-    return () => {
-      isWindowAvailable() && window.removeEventListener('scroll', changeNavbar);
-    };
-  });
-
   const { secondary, brandText, setApiKey } = props;
 
   // Here are all the props that may change depending on navbar's type or state.(secondary, variant, scrolled)
@@ -42,18 +31,11 @@ export default function AdminNavbar(props: {
   let navbarShadow = 'none';
   let navbarBg = useColorModeValue(
     'rgba(244, 247, 254, 0.2)',
-    'rgba(11,20,55,0.5)',
+    'rgba(11,20,55,0.5)'
   );
   let navbarBorder = 'transparent';
   let secondaryMargin = '0px';
   let gap = '0px';
-  const changeNavbar = () => {
-    if (isWindowAvailable() && window.scrollY > 1) {
-      setScrolled(true);
-    } else {
-      setScrolled(false);
-    }
-  };
 
   return (
     <Box
@@ -110,8 +92,8 @@ export default function AdminNavbar(props: {
         mb={gap}
       >
         <Box mb={{ base: '8px', md: '0px' }}>
-          <Breadcrumb>
-            <BreadcrumbItem color={secondaryText} fontSize="sm" mb="5px">
+          <Breadcrumb mb={2}>
+            <BreadcrumbItem color={secondaryText} fontSize="sm">
               <BreadcrumbLink href="#" color={secondaryText}>
                 Pages
               </BreadcrumbLink>

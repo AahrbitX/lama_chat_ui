@@ -37,7 +37,7 @@ function Sidebar(props: SidebarProps) {
   let variantChange = '0.2s linear';
   let shadow = useColorModeValue(
     '14px 17px 40px 4px rgba(112, 144, 176, 0.08)',
-    'unset',
+    'unset'
   );
   // Chakra Color Mode
   let sidebarBg = useColorModeValue('white', 'navy.800');
