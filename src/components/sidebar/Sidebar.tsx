@@ -127,15 +127,15 @@ export function SidebarResponsive(props: { routes: IRoute[] }) {
             _hover={{ boxShadow: 'none' }}
           />
           <DrawerBody maxW="285px" px="0rem" pb="0">
-            <Scrollbars
+            {/* <Scrollbars
               universal={true}
               autoHide
               renderTrackVertical={renderTrack}
               renderThumbVertical={renderThumb}
               renderView={renderView}
-            >
-              <Content routes={routes} />
-            </Scrollbars>
+            > */}
+            <Content routes={routes} />
+            {/* </Scrollbars> */}
           </DrawerBody>
         </DrawerContent>
       </Drawer>

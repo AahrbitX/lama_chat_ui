@@ -14,7 +14,6 @@
     "@chakra-ui/react": "^2.8.2",
     "@chakra-ui/system": "^2.6.2",
     "@chakra-ui/theme-tools": "^2.1.2",
-    "@codemirror/legacy-modes": "^6.3.2",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "@heroicons/react": "^2.0.17",
@@ -43,6 +42,7 @@
   "devDependencies": {
     "@babel/cli": "^7.24.6",
     "@babel/core": "^7.24.6",
+    "@codemirror/legacy-modes": "^6.5.0",
     "@types/node": "18.15.11",
     "@types/react": "18.0.31",
     "@types/react-dom": "18.0.11",

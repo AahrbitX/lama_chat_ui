@@ -22,14 +22,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useEffect(() => {
     const initialKey = localStorage.getItem('apiKey');
-    console.log(initialKey);
     if (initialKey?.includes('sk-') && apiKey !== initialKey) {
       setApiKey(initialKey);
     }
   }, [apiKey]);
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body id={'root'}>
         <AppWrappers>
           {/* <ChakraProvider theme={theme}> */}

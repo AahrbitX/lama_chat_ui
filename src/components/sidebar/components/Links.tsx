@@ -60,10 +60,7 @@ export function SidebarLinks(props: SidebarLinksProps) {
             ps="17px"
             my={2}
             borderRadius={'xl'}
-            style={{
-              background:
-                'linear-gradient(to right,  transparent , #aac0fe 80%)',
-            }}
+            style={{}}
           >
             <HStack
               w="100%"

@@ -213,11 +213,10 @@ export default function HeaderLinks(props: {
           <Flex flexDirection="column" p="10px">
             <NavLink href="/settings">
               <MenuItem
-                _hover={{ bg: 'none' }}
-                _focus={{ bg: 'none' }}
                 color={textColor}
                 borderRadius="8px"
                 px="14px"
+                backgroundColor={'transparent'}
               >
                 <Text fontWeight="500" fontSize="sm">
                   Profile Settings
@@ -225,11 +224,10 @@ export default function HeaderLinks(props: {
               </MenuItem>
             </NavLink>
             <MenuItem
-              _hover={{ bg: 'none' }}
-              _focus={{ bg: 'none' }}
               color="red.400"
               borderRadius="8px"
               px="14px"
+              backgroundColor={'transparent'}
             >
               <Text fontWeight="500" fontSize="sm">
                 Log out

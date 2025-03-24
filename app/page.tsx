@@ -16,15 +16,62 @@ import {
 import { useState } from 'react';
 import { MdAutoAwesome, MdEdit, MdPerson } from 'react-icons/md';
 import Bg from '../public/img/chat/bg-image.png';
+import { getResponse } from '../src/actions/llama/action';
 
 export default function Chat() {
-  // Input States
   const [inputOnSubmit, setInputOnSubmit] = useState<string>('');
   const [inputCode, setInputCode] = useState<string>('');
-  // Response message
   const [outputCode, setOutputCode] = useState<string>('');
-  // Loading state
   const [loading, setLoading] = useState<boolean>(false);
+
+  const handleTranslate = async () => {
+    setInputOnSubmit(inputCode);
+
+    if (!inputCode) {
+      alert('Please enter your message.');
+      return;
+    }
+
+    if (inputCode.length > 700) {
+      alert(
+        `Please enter code less than 700 characters. You are at ${inputCode.length}.`
+      );
+      return;
+    }
+
+    setOutputCode('');
+    setLoading(true);
+
+    try {
+      const response = await getResponse(inputCode);
+      if (response.error) throw new Error(response.error);
+
+      const data = response.response;
+      setOutputCode(data);
+    } catch (error: any) {
+      if (error.name === 'AbortError') {
+        console.log('Request aborted');
+      } else {
+        alert(error.message);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // -------------- Copy Response --------------
+  // const copyToClipboard = (text: string) => {
+  //   const el = document.createElement('textarea');
+  //   el.value = text;
+  //   document.body.appendChild(el);
+  //   el.select();
+  //   document.execCommand('copy');
+  //   document.body.removeChild(el);
+  // };
+
+  const handleChange = (Event: any) => {
+    setInputCode(Event.target.value);
+  };
 
   const borderColor = useColorModeValue('gray.200', 'whiteAlpha.200');
   const inputColor = useColorModeValue('navy.700', 'white');
@@ -36,103 +83,6 @@ export default function Chat() {
     { color: 'gray.500' },
     { color: 'whiteAlpha.600' }
   );
-  const handleTranslate = async () => {
-    let apiKey = localStorage.getItem('apiKey');
-    setInputOnSubmit(inputCode);
-
-    // Chat post conditions(maximum number of characters, valid message etc.)
-    const maxCodeLength = 700;
-
-    if (!apiKey?.includes('sk-')) {
-      alert('Please enter an API key.');
-      return;
-    }
-
-    if (!inputCode) {
-      alert('Please enter your message.');
-      return;
-    }
-
-    if (inputCode.length > maxCodeLength) {
-      alert(
-        `Please enter code less than ${maxCodeLength} characters. You are currently at ${inputCode.length} characters.`
-      );
-      return;
-    }
-    setOutputCode(' ');
-    setLoading(true);
-    const controller = new AbortController();
-    const body: ChatBody = {
-      inputCode,
-      model: 'gpt-4o',
-      apiKey,
-    };
-
-    // -------------- Fetch --------------
-    const response = await fetch('./api/chatAPI', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      signal: controller.signal,
-      body: JSON.stringify(body),
-    });
-
-    if (!response.ok) {
-      setLoading(false);
-      if (response) {
-        alert(
-          'Something went wrong went fetching from the API. Make sure to use a valid API key.'
-        );
-      }
-      return;
-    }
-
-    const data = response.body;
-
-    if (!data) {
-      setLoading(false);
-      alert('Something went wrong');
-      return;
-    }
-
-    const reader = data.getReader();
-    const decoder = new TextDecoder();
-    let done = false;
-
-    while (!done) {
-      setLoading(true);
-      const { value, done: doneReading } = await reader.read();
-      done = doneReading;
-      const chunkValue = decoder.decode(value);
-      setOutputCode((prevCode) => prevCode + chunkValue);
-    }
-
-    setLoading(false);
-  };
-  // -------------- Copy Response --------------
-  // const copyToClipboard = (text: string) => {
-  //   const el = document.createElement('textarea');
-  //   el.value = text;
-  //   document.body.appendChild(el);
-  //   el.select();
-  //   document.execCommand('copy');
-  //   document.body.removeChild(el);
-  // };
-
-  // *** Initializing apiKey with .env.local value
-  // useEffect(() => {
-  // ENV file verison
-  // const apiKeyENV = process.env.NEXT_PUBLIC_OPENAI_API_KEY
-  // if (apiKey === undefined || null) {
-  //   setApiKey(apiKeyENV)
-  // }
-  // }, [])
-
-  const handleChange = (Event: any) => {
-    setInputCode(Event.target.value);
-  };
-
   return (
     <Flex
       w="auto"
@@ -283,21 +233,17 @@ export default function Chat() {
           mt="14px"
           direction={{ base: 'column', md: 'row' }}
           alignItems="center"
+          pb={2}
         >
-          <Text fontSize="xs" textAlign="center" color={gray}>
+          <Text
+            fontSize="xs"
+            textAlign="center"
+            color={gray}
+            style={{ textWrap: 'balance' }}
+          >
             Free Research Preview. ChatGPT may produce inaccurate information
             about people, places, or facts.
           </Text>
-          <Link href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">
-            <Text
-              fontSize="xs"
-              color={textColor}
-              fontWeight="500"
-              textDecoration="underline"
-            >
-              ChatGPT May 12 Version
-            </Text>
-          </Link>
         </Flex>
       </Flex>
     </Flex>

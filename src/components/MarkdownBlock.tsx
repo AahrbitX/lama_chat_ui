@@ -1,4 +1,3 @@
-import ReactMarkdown from 'react-markdown';
 import { FC, useEffect, useState } from 'react';
 
 interface Props {
@@ -35,7 +34,7 @@ export const MarkdownBlock: FC<Props> = ({
       </button>
 
       <div className="p-4 h-500px bg-[#1A1B26] text-white overflow-scroll rounded-md">
-        <ReactMarkdown className="font-normal">{code}</ReactMarkdown>
+        {code}
       </div>
     </div>
   );
