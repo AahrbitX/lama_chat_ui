@@ -1,6 +1,9 @@
-export const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+
 
 export async function uploadFile(file, setUploadStatus) {
+  console.log(API_URL);
   if (!file) {
     setUploadStatus("Please select a file to upload.");
     return;
