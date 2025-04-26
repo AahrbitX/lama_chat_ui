@@ -1,6 +1,5 @@
-import HeroSection from "../components/hero/HeroSection"; // adjust the path if needed
+import HeroSection from "../components/hero/HeroSection";
 
 export default function Home() {
   return <HeroSection />;
 }
-

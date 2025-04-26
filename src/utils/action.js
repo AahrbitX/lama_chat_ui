@@ -1,76 +1,88 @@
-export const API_URL = process.env.API_BASE_URL|| 'http://localhost:8000';
+export const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export async function uploadFile(file, setUploadStatus) {
   if (!file) {
-    setUploadStatus('Please select a file to upload.');
+    setUploadStatus("Please select a file to upload.");
     return;
   }
 
   const formData = new FormData();
-  formData.append('file', file);
+  formData.append("file", file);
 
   try {
-    setUploadStatus('Uploading...');
+    setUploadStatus("Uploading...");
     const response = await fetch(`${API_URL}/upload`, {
-      method: 'POST',
+      method: "POST",
       body: formData,
       headers: {
-        Accept: 'application/json',
+        Accept: "application/json",
       },
-      credentials: 'include',
+      credentials: "include",
     });
 
+    console.log(response);
+
     if (response.ok) {
+      setUploadStatus("Uploaded");
       const result = await response.json();
       // console.log(result.session_id);
-      setUploadStatus(`File uploaded successfully! Server Response: ${result.message || 'Success'}`);
+      setUploadStatus(
+        `File uploaded successfully! Server Response: ${
+          result.message || "Success"
+        }`
+      );
       return result;
     } else {
+      setUploadStatus("Upload Failed");
       const errorResponse = await response.json();
-      setUploadStatus(`Failed to upload file. Error: ${errorResponse.message || 'Unknown error'}`);
+      setUploadStatus(
+        `Failed to upload file. Error: ${
+          errorResponse.message || "Unknown error"
+        }`
+      );
     }
   } catch (error) {
-    console.error('Upload error:', error);
-    setUploadStatus('An error occurred during upload. Please try again later.');
+    setUploadStatus("Error In Upload");
+    console.error("Upload error:", error);
+    setUploadStatus("An error occurred during upload. Please try again later.");
   }
 }
 
-
 export async function chat(query) {
-
   let session_id = null;
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     session_id = sessionStorage.getItem("session_id");
     console.log("Session ID:", session_id);
   } else {
-    console.error("sessionStorage is not available in the current environment.");
+    console.error(
+      "sessionStorage is not available in the current environment."
+    );
   }
   try {
     // setUploadStatus('Uploading...');
     const response = await fetch(`${API_URL}/chat`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
+        "Content-Type": "application/json",
+        Accept: "application/json",
       },
       body: JSON.stringify({
         user_input: query,
         session_id: session_id,
       }),
-      credentials: 'include',
+      credentials: "include",
     });
 
     if (response.ok) {
       const result = await response.json();
       console.log(result.session_id);
-      // setUploadStatus(`File uploaded successfully! Server Response: ${result.message || 'Success'}`);
+
       return result;
     } else {
       const errorResponse = await response.json();
-      // setUploadStatus(`Failed to upload file. Error: ${errorResponse.message || 'Unknown error'}`);
+      console.error("Chat error:", errorResponse);
     }
   } catch (error) {
-    console.error('Upload error:', error);
-    // setUploadStatus('An error occurred during upload. Please try again later.');
+    console.error("Chat error:", error);
   }
 }

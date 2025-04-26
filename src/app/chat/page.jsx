@@ -148,10 +148,10 @@
 //   );
 // }
 
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
 import {
   Send,
   MessageSquare,
@@ -159,8 +159,8 @@ import {
   Settings,
   Trash2,
   Plus,
-} from 'lucide-react';
-import { chat } from '../../utils/action';
+} from "lucide-react";
+import { chat } from "../../utils/action";
 
 function SidebarItem({ icon, label }) {
   return (
@@ -171,11 +171,11 @@ function SidebarItem({ icon, label }) {
 }
 
 export default function PremiumChatHome() {
-  const [input, setInput] = useState('');
-  const [response, setResponse] = useState('');
+  const [input, setInput] = useState("");
+  const [response, setResponse] = useState("");
 
   const fetchChatResponse = async () => {
-    if (input.trim() === '') return;
+    if (input.trim() === "") return;
 
     try {
       const result = await chat(input);
@@ -183,12 +183,12 @@ export default function PremiumChatHome() {
         setResponse(result.response);
       }
     } catch (error) {
-      console.error('Error fetching chat response:', error);
+      console.error("Error fetching chat response:", error);
     }
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       fetchChatResponse();
     }
   };
@@ -208,7 +208,7 @@ export default function PremiumChatHome() {
             <SidebarItem icon={<Settings size={18} />} label="Settings" />
           </div>
         </div>
-        <div className="text-sm opacity-60">© YourCompany 2025</div>
+        <div className="text-sm opacity-60">&copy;&nbsp;AahrbitX&deg; 2025</div>
       </div>
 
       {/* Main Chat Area */}
@@ -247,4 +247,3 @@ export default function PremiumChatHome() {
     </div>
   );
 }
-
