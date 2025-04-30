@@ -10,7 +10,7 @@ export default function UploadPage() {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uplaodStatus, setUploadStatus] = useState("");
   // const [result,setResult] =useState("");
-  const [sessionId, setSessionId] = useState(""); // Added session ID state
+  // const [sessionId, setSessionId] = useState(""); // Added session ID state
   // Added upload status state
   // const [showServices, setShowServices] = useState(false);
 
@@ -49,7 +49,7 @@ export default function UploadPage() {
     try {
       const result = await uploadFile(file, setUploadStatus);
       sessionStorage.setItem("session_id", result.session_id);
-      setSessionId(sessionStorage.getItem("session_id"));
+      // setSessionId(sessionStorage.getItem("session_id"));
       // Assuming the API returns a session ID
     } catch (error) {
       console.error("Upload error:", error);
@@ -134,7 +134,7 @@ export default function UploadPage() {
             Download Sample Template
           </button>
 
-          {sessionId && (
+          {sessionStorage.getItem("session_id") && (
             <button
               onClick={() => {
                 window.location.href = "/chat";
