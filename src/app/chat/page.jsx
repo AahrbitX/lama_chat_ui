@@ -61,10 +61,15 @@ export default function PremiumChatHome() {
           className="flex-1 bg-[#161b22] text-white p-3 rounded-xl outline-none"
           disabled={loading}
         />
+
         <button
-          disabled={loading}
+          disabled={loading || input.trim() === ""}
           onClick={fetchChatResponse}
-          className="p-3 bg-[#281080] hover:bg-[#4c2ea0] rounded-xl"
+          className={`p-3 rounded-xl ${
+            loading || input.trim() === ""
+              ? "bg-gray-500 cursor-not-allowed"
+              : "bg-[#281080] hover:bg-[#4c2ea0]"
+          }`}
         >
           <Send size={20} />
         </button>
