@@ -137,7 +137,7 @@ export default function UploadPage() {
           {sessionStorage.getItem("session_id") && (
             <button
               onClick={() => {
-                window.location.href = "/chat";
+                window.location.href = "/chatx";
               }}
               className="bg-blue-600 hover:bg-blue-700 text-gray-300 px-6 py-2 rounded-xl transition"
             >
