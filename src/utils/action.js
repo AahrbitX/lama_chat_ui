@@ -1,9 +1,7 @@
-const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-
+//const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export async function uploadFile(file, setUploadStatus) {
-  console.log(API_URL);
+  //console.log(API_URL);
   if (!file) {
     setUploadStatus("Please select a file to upload.");
     return;
@@ -14,7 +12,7 @@ export async function uploadFile(file, setUploadStatus) {
 
   try {
     setUploadStatus("Uploading...");
-    const response = await fetch(`${API_URL}/upload`, {
+    const response = await fetch("/upload", {
       method: "POST",
       body: formData,
       headers: {
@@ -63,10 +61,9 @@ export async function chat(query) {
   }
   try {
     // setUploadStatus('Uploading...');
-    const response = await fetch(`${API_URL}/chat`, {
+    const response = await fetch("/chat" {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         Accept: "application/json",
       },
       body: JSON.stringify({
@@ -83,7 +80,8 @@ export async function chat(query) {
       return result;
     } else {
       const errorResponse = await response.json();
-      console.error("Chat error:", errorResponse);
+      console.log(errorResponse);
+      // console.error("Chat error:", errorResponse);
     }
   } catch (error) {
     console.error("Chat error:", error);
