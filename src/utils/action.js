@@ -61,7 +61,7 @@ export async function chat(query) {
   }
   try {
     // setUploadStatus('Uploading...');
-    const response = await fetch("/chat" {
+    const response = await fetch("/chat",{
       method: "POST",
       headers: {
         Accept: "application/json",
