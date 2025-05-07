@@ -5,7 +5,13 @@ import React, { createContext, useContext, useState } from "react";
 const ChatContext = createContext(undefined);
 
 export const ChatProvider = ({ children }) => {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([
+    {
+      type: "bot",
+      message:
+        "# Welcome to Lama Chat\n\nHow can I help you today?\n\n* Ask questions regarding the file\n* Get information about the file\n* Have a conversation about it",
+    },
+  ]);
 
   const [loading, setLoading] = useState(false);
 

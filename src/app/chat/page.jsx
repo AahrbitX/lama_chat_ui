@@ -39,6 +39,7 @@ export default function PremiumChatHome() {
   return (
     <div className="flex-1 flex flex-col justify-between p-6">
       <ChatContainer />
+
       {/* Input Area */}
       {loading && (
         <TextShimmerWave
