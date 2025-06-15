@@ -2,6 +2,7 @@
 
 import React, { useRef, useState } from "react";
 import ChatModal from "../../components/chat/chatModal";
+import Image from "next/image";
 
 const plans = [
 	{
@@ -95,10 +96,12 @@ export default function PremiumChatHome() {
 									className="flex flex-col items-center bg-gradient-to-br from-[#3b0764]/30 to-[#3b0764]/30 rounded-2xl  w-full p-6 md:p-8 gap-6 transition"
 								>
 									<div className="flex-1 flex flex-col items-center justify-center">
-										<img
+										<Image
 											src={plan.image}
 											alt={plan.title}
 											className=" mb-4 w-[220px]"
+                      width={220}
+                      height={220}
 										/>
 										<div className="font-extrabold text-2xl mb-2 text-white">
 											{plan.title}
@@ -143,7 +146,7 @@ export default function PremiumChatHome() {
 			</section>
 		</div>
 	);
-  
+
 	const checkDataForSession = async (id) => {
 		return new Promise((resolve) => setTimeout(() => resolve(id === "valid-session-id"), 800));
 	};
@@ -286,7 +289,7 @@ export default function PremiumChatHome() {
 				{/* Right: Illustration or Preview */}
 				<div className="flex-1 flex items-center justify-center">
 					<div className="bg-[#1a102e]/80 rounded-2xl shadow-xl p-6 flex flex-col items-center w-full max-w-md">
-						<img
+						<Image
 							src={
 								selectedPlan === "file"
 									? "/assets/images/meeting.png"
@@ -295,7 +298,9 @@ export default function PremiumChatHome() {
 							alt={
 								selectedPlan === "file" ? "File Chat" : "URL Chat"
 							}
-							className="w-full h-48 object-cover rounded-xl mb-4"
+              className="w-full h-48 object-cover rounded-xl mb-4"
+              width={ 300}
+              height={200}
 						/>
 						<div className="text-white text-lg font-semibold mb-2">
 							{selectedPlan === "file"

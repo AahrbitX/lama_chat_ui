@@ -1,5 +1,6 @@
 'use client';
 
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 export default function TopNavbar() {
@@ -40,9 +41,9 @@ export default function TopNavbar() {
                     backdropFilter: scrolled ? "blur(8px)" : "none",
                 }}>
                 <div className="flex items-center h-12 sm:h-16 mr-2">
-                    <a href="/" className="flex items-center space-x-2 font-bold text-xl text-[#a78bfa]">
+                    <Link href="/" className="flex items-center space-x-2 font-bold text-xl text-[#a78bfa]">
                         <span className="tracking-wide">Ξxora</span>
-                    </a>
+                    </Link>
                 </div>
 
                 <ul className="hidden sm:flex flex-1 justify-end items-center space-x-6 md:space-x-8 text-sm font-semibold">
@@ -52,7 +53,7 @@ export default function TopNavbar() {
                             window.location.pathname === tab.href;
                         return (
                             <li key={tab.name}>
-                                <a
+                                <Link
                                     href={tab.href}
                                     className={`relative transition-colors duration-300 ${
                                         isActive
@@ -64,7 +65,7 @@ export default function TopNavbar() {
                                     }}
                                 >
                                     {tab.name}
-                                </a>
+                                </Link>
                             </li>
                         );
                     })}
@@ -110,7 +111,7 @@ export default function TopNavbar() {
                                 window.location.pathname === tab.href;
                             return (
                                 <li key={tab.name}>
-                                    <a
+                                    <Link
                                         href={tab.href}
                                         className={`relative transition-colors duration-300 ${
                                             isActive
@@ -123,7 +124,7 @@ export default function TopNavbar() {
                                         onClick={() => setMenuOpen(false)}
                                     >
                                         {tab.name}
-                                    </a>
+                                    </Link>
                                 </li>
                             );
                         })}

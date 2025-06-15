@@ -8,7 +8,7 @@ export default function Achievements() {
     alt: `User ${num}`,
   }));
   return (
-    <section className="relative z-10 max-w-[1200px] mx-auto px-2 md:px-8 py-16 md:py-24 rounded-[2.5rem] overflow-hidden bg-b">
+    <section className="relative z-10 max-w-[1200px] mx-auto px-2 md:px-8 py-16 md:py-24 rounded-[2.5rem] overflow-hidden bg-b" id="#achievements">
       <div className="relative z-10 flex flex-col md:flex-row md:items-end md:justify-between px-6 pt-12 pb-10 gap-8">
         <div className="flex-1 flex flex-col justify-center">
           <span className="text-[#a78bfa] font-mono text-lg mb-2 tracking-widest uppercase">Ξxora Achievements</span>

@@ -2,6 +2,7 @@
 
 import React, { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
+import Image from "next/image";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 60, scale: 0.95 },
@@ -48,6 +49,7 @@ const About = () => {
       className="relative z-10 max-w-6xl mx-auto px-4 py-16"
       onMouseMove={handleMouseMove}
       onMouseLeave={() => setParallax({ x: 0, y: 0 })}
+      id="#about"
     >
       <section className="max-w-6xl mx-auto px-4 py-16">
         <div className="text-center mb-12">
@@ -139,8 +141,10 @@ const About = () => {
               transition: { type: "spring", stiffness: 200 }
             }}
           >
-            <img
+            <Image
               src="/assets/images/creative-team.png"
+              width={500}
+              height={300}
               alt="Creative team in action"
               className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
             />

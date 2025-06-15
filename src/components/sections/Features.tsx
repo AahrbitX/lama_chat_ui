@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 const features = [
@@ -45,7 +46,7 @@ const features = [
 
 export default function Features() {
   return (
-    <section className="relative z-10 max-w-6xl mx-auto px-4 py-24">
+    <section className="relative z-10 max-w-6xl mx-auto px-4 py-24" id="features">
       <h2 className="text-4xl md:text-5xl font-extrabold mb-6 text-white">
         <span className="text-[#a78bfa]">Ξxora</span> Features
       </h2>
@@ -73,8 +74,10 @@ export default function Features() {
             {/* Image Section */}
             <div className="flex-1 flex justify-center items-center">
               <div className="w-full max-w-md rounded-2xl overflow-hidden shadow-xl bg-gradient-to-br from-[#a78bfa]/40 to-[#3b0764]">
-                <img
+                <Image
                   src={feature.image}
+                  width={600}
+                  height={400}
                   alt={feature.title}
                   className="object-cover w-full h-60 md:h-72"
                   style={{ background: "linear-gradient(135deg, #a78bfa33 0%, #3b0764 100%)" }}
