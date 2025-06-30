@@ -20,6 +20,8 @@ const plans = [
 ];
 
 export default function PremiumChatHome() {
+
+	const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:8000";
 	const [phase, setPhase] = useState(1);
 	const [selectedPlan, setSelectedPlan] = useState(null);
 	const [showChat, setShowChat] = useState(false);
@@ -27,7 +29,8 @@ export default function PremiumChatHome() {
 	const [uploadError, setUploadError] = useState("");
 	const [canChat, setCanChat] = useState(false);
 	const [sessionId, setSessionId] = useState(null);
-
+	const [selectedFile, setSelectedFile] = useState(null);		
+	const [inputUrl, setInputUrl] = useState("");
 	const phase1Ref = useRef(null);
 	const phase2Ref = useRef(null);
 	const phase3Ref = useRef(null);
@@ -37,8 +40,6 @@ export default function PremiumChatHome() {
 			ref.current?.scrollIntoView({ behavior: "smooth" });
 		}, 100);
 	};
-
-
 	const renderPlanSelection = () => (
 		<div className="relative min-h-screen flex flex-col" ref={phase1Ref}>
 			<section className="flex-1 flex flex-col items-center justify-center relative z-10">
@@ -146,11 +147,40 @@ export default function PremiumChatHome() {
 			</section>
 		</div>
 	);
-
 	const checkDataForSession = async (id) => {
 		return new Promise((resolve) => setTimeout(() => resolve(id === "valid-session-id"), 800));
 	};
-
+	const handleUrlScrape = async () => {
+	  if (!inputUrl.trim()) {
+		setUploadError("Please enter a valid URL.");
+		return;
+	  }
+	  setUploading(true);
+	  setUploadError("");
+	  try {
+		const response = await fetch(`${BASE_URL}/deep-scrape`, {
+		  method: "POST",
+		  headers: { "Content-Type": "application/json", accept: "application/json" },
+		  body: JSON.stringify({ url: inputUrl, max_depth: 2 }),
+		});
+		if (!response.ok) throw new Error("Scraping failed. Please try again.");
+		const data = await response.json();
+		const newSessionId = data.session_id;
+		setSessionId(newSessionId);
+		sessionStorage.setItem("session_id", newSessionId);
+	
+		// Optionally check data for session here if needed
+		const hasData = await checkDataForSession(newSessionId);
+		setCanChat(hasData);
+	
+		setUploading(false);
+		setPhase(3);
+		scrollToPhase(phase3Ref);
+	  } catch (err) {
+		setUploading(false);
+		setUploadError(err.message || "Scraping failed. Please try again.");
+	  }
+	};
 	const handleFileUpload = async (e) => {
 		const file = e.target.files[0];
 		if (!file) return;
@@ -163,22 +193,40 @@ export default function PremiumChatHome() {
 			setUploadError("Only PDF, DOCX, or TXT files are allowed.");
 			return;
 		}
-
+	
 		setUploading(true);
 		setUploadError("");
-		// Simulate upload and session id creation
-		setTimeout(async () => {
-			setUploading(false);
-			const newSessionId = "valid-session-id"; // Replace with real session id from backend
+	
+		try {
+			const formData = new FormData();
+			formData.append("file", file);
+	
+			const response = await fetch(`${BASE_URL}/upload`, {
+				method: "POST",
+				body: formData,
+			});
+	
+			if (!response.ok) {
+				throw new Error("Upload failed. Please try again.");
+			}
+	
+			const data = await response.json();
+			const newSessionId = data.session_id;
 			setSessionId(newSessionId);
-
-			// Check if data exists for this session
+			sessionStorage.setItem("session_id", newSessionId);
+	
+			// Optionally check data for session here if needed
 			const hasData = await checkDataForSession(newSessionId);
 			setCanChat(hasData);
+	
+			setUploading(false);
 			setPhase(3);
-		}, 1200);
+			scrollToPhase(phase3Ref);
+		} catch (err) {
+			setUploading(false);
+			setUploadError(err.message || "Upload failed. Please try again.");
+		}
 	};
-
 	const renderInputPhase = () => (
 		<section
 			ref={phase2Ref}
@@ -214,7 +262,7 @@ export default function PremiumChatHome() {
 									type="file"
 									accept=".pdf,.docx,.txt"
 									className="block w-full px-5 py-3 rounded-xl border border-[#a78bfa]/40 bg-[#3b0764]/60 text-white focus:border-[#a78bfa] transition"
-									onChange={handleFileUpload}
+									onChange={e => setSelectedFile(e.target.files[0])}
 									disabled={uploading}
 								/>
 								{uploadError && (
@@ -234,46 +282,50 @@ export default function PremiumChatHome() {
 						) : (
 							<label className="w-full">
 								<span className="block mb-2 text-[#a78bfa] font-semibold">
-									Paste Website URL
+								Paste Website URL
 								</span>
 								<input
-									type="url"
-									placeholder="https://example.com"
-									className="block w-full px-5 py-3 rounded-xl border border-[#a78bfa]/40 bg-[#3b0764]/60 text-white focus:border-[#a78bfa] transition"
+								type="url"
+								placeholder="https://example.com"
+								value={inputUrl}
+								onChange={e => setInputUrl(e.target.value)}
+								className="block w-full px-5 py-3 rounded-xl border border-[#a78bfa]/40 bg-[#3b0764]/60 text-white focus:border-[#a78bfa] transition"
+								disabled={uploading}
 								/>
+								{uploadError && (
+								<span className="block mt-2 text-xs text-red-400">
+									{uploadError}
+								</span>
+								)}
+								{uploading && (
+								<span className="block mt-2 text-xs text-[#a78bfa]">
+									Scraping...
+								</span>
+								)}
 								<span className="block mt-2 text-xs text-[#c4b5fd]">
-									Ξxora will use the content from this page.
+								Ξxora will use the content from this page.
 								</span>
 							</label>
 						)}
 					</div>
 					<div className="flex gap-4 mt-2">
 						<button
-							onClick={() => {
-								setPhase(3);
-								scrollToPhase(phase3Ref);
-							}}
-							className="flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-r from-[#a78bfa] to-[#7c3aed] text-white font-semibold text-lg shadow-lg hover:from-[#7c3aed] hover:to-[#a78bfa] transition"
+						  onClick={() => {
+							if (selectedPlan === "file") {
+							  if (!selectedFile) {
+								setUploadError("Please select a file before continuing.");
+								return;
+							  }
+							  handleFileUpload({ target: { files: [selectedFile] } });
+							} else {
+							  handleUrlScrape();
+							}
+						  }}
+						  disabled={uploading}
+						  className="flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-r from-[#a78bfa] to-[#7c3aed] text-white font-semibold text-lg shadow-lg hover:from-[#7c3aed] hover:to-[#a78bfa] transition"
 						>
-							Create Knowladge base
-							<svg
-								className="w-5 h-5 ml-1"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="2"
-								viewBox="0 0 24 24"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									d="M17 7l-1.41-1.41a1 1 0 00-1.42 0L7 14.17V17h2.83l7.17-7.17a1 1 0 000-1.42z"
-								/>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									d="M19 5v6h-6"
-								/>
-							</svg>
+						  Create Knowledge base
+						  {/* ...svg... */}
 						</button>
 						<button
 							onClick={() => {
@@ -317,7 +369,6 @@ export default function PremiumChatHome() {
 			</div>
 		</section>
 	);
-
 	const renderStartPhase = () => (
 		<section
 			ref={phase3Ref}
@@ -533,6 +584,8 @@ export default function PremiumChatHome() {
 							onClick={() => {
 								setPhase(1);
 								scrollToPhase(phase1Ref);
+								sessionStorage.removeItem("session_id");
+								setSessionId(null);
 							}}
 							className="px-8 py-3 rounded-full border border-[#a78bfa] text-[#a78bfa] font-semibold bg-transparent hover:bg-[#a78bfa]/10 transition w-full sm:w-auto"
 						>

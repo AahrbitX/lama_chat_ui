@@ -6,7 +6,7 @@ interface Message {
 }
 
 export default function ChatModal({ open, setOpen }) {
-
+  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:8000";
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([
     { sender: "bot", text: "Hi, I'm Ξxora! How can I help you today?" }
@@ -17,22 +17,51 @@ export default function ChatModal({ open, setOpen }) {
     if (open && messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [messages, open]);
-
-  const handleSend = (e?: React.FormEvent) => {
+}, [messages, open]);
+  const handleSend = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     if (!input.trim()) return;
+
     const userMsg: Message = { sender: "user", text: input };
     setMessages((msgs) => [...msgs, userMsg]);
     setInput("");
-    setTimeout(() => {
+
+    // Get session_id from sessionStorage
+    const sessionId = sessionStorage.getItem("session_id");
+    if (!sessionId) {
       setMessages((msgs) => [
         ...msgs,
-        { sender: "bot", text: "Thanks for reaching out! We'll get back to you soon." }
+        { sender: "bot", text: "Session not found. Please upload a file first." }
       ]);
-    }, 900);
-  };
+      return;
+    }
 
+    try {
+      const res = await fetch(`${BASE_URL}/chat`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "accept": "application/json" },
+        body: JSON.stringify({
+          user_input: userMsg.text,
+          session_id: sessionId,
+          // client_id: "",
+          end_user_id: sessionId
+        }),
+      });
+      if (!res.ok) throw new Error("Chat failed");
+      const data = await res.json();
+      setMessages((msgs) => [
+        ...msgs,
+        { sender: "bot", text: data.answer || "No response from bot." }
+      ]);
+      // Optionally, handle data.context here if you want to display context info
+    } catch (err) {
+      setMessages((msgs) => [
+        ...msgs,
+        { sender: "bot", text: "Sorry, there was a problem contacting the server." }
+      ]);
+    }
+  };
+  
   return (
     <>
       <button
