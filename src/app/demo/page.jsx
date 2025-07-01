@@ -21,7 +21,7 @@ const plans = [
 
 export default function PremiumChatHome() {
 
-	const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:8000";
+	const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
 	const [phase, setPhase] = useState(1);
 	const [selectedPlan, setSelectedPlan] = useState(null);
 	const [showChat, setShowChat] = useState(false);

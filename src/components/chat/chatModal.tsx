@@ -6,7 +6,7 @@ interface Message {
 }
 
 export default function ChatModal({ open, setOpen }) {
-  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:8000";
+  const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([
     { sender: "bot", text: "Hi, I'm Ξxora! How can I help you today?" }
