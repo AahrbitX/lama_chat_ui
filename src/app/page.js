@@ -20,7 +20,7 @@ export default function Home() {
       <Achievements />
       <FAQSection />
       <NewsLetters />
-
+      
       <script src={`${apiBase}/static/config.js`} defer></script>
       <script
         src={`${apiBase}/static/widget.js`}
