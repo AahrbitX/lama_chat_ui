@@ -64,7 +64,7 @@ export default function ChatModal({ open, setOpen }) {
   
   return (
     <>
-      <button
+      {/* <button
         className="fixed bottom-8 right-8 z-50 bg-gradient-to-br from-[#a78bfa] via-[#7c3aed] to-[#3b0764] text-white rounded-full shadow-lg p-4 hover:scale-105 transition"
         onClick={() => setOpen(true)}
         aria-label="Open chat"
@@ -73,7 +73,7 @@ export default function ChatModal({ open, setOpen }) {
           <circle cx="14" cy="14" r="14" fill="#a78bfa" />
           <path d="M8 18v-8a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8l-3-2H10a2 2 0 0 1-2-2z" fill="#fff"/>
         </svg>
-      </button>
+      </button> */}
 
       {open && (
           <div className="w-full h-[600px] fixed bottom-[12%] right-[2%] max-w-md bg-gradient-to-br from-[#3b0764] via-[#7c3aed] to-[#a78bfa] rounded-2xl shadow-2xl p-0 flex flex-col overflow-hidden z-50 animate-fadeInUp">

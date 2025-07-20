@@ -41,7 +41,7 @@ export default function PremiumChatHome() {
 		}, 100);
 	};
 	const renderPlanSelection = () => (
-		<div className="relative min-h-screen flex flex-col" ref={phase1Ref}>
+		<div className="relative min-h-screen flex flex-col" ref={phase1Ref} suppressHydrationWarning>
 			<section className="flex-1 flex flex-col items-center justify-center relative z-10">
 				<section className="flex-1 flex flex-col items-center justify-center relative z-10">
 					<div className="absolute inset-0 flex items-center justify-center -z-10">

@@ -13,18 +13,17 @@ export default function Home() {
   const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-black to-black text-white relative">
+    <main className="min-h-screen bg-gradient-to-b from-black to-black text-white relative" suppressHydrationWarning >
       <HeroSection />
       <About />
       <Features/>
       <Achievements />
       <FAQSection />
       <NewsLetters />
-      
       <script src={`${apiBase}/static/config.js`} defer></script>
       <script
         src={`${apiBase}/static/widget.js`}
-        data-client-id="ddac2c8b-cc1f-41d3-a624-6f7c5c84095c"
+        data-client-id="5182fe22-21a1-410a-93e6-e0d029101e52"
         defer
       ></script>
     </main>
